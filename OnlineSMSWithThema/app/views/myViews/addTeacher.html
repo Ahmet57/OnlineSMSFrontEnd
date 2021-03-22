@@ -1,0 +1,15 @@
+﻿<div align="center" class="form-group">
+    <label align="center" for="TeacherID">TeacherID</label>
+    <input align="center" type="text" class="form-control" id="TeacherID" placeholder="Enter TeacherID" [required="string" ] data-ng-model="TeacherID" />
+    <label align="center" for="TeacherName">TeacherName</label>
+    <input align="center" type="text" class="form-control" id="TeacherName" placeholder="Enter TeacherName" [required="string" ] data-ng-model="TeacherName" />
+    <label align="center" for="TeacherUserName">TeacherUserName</label>
+    <input align="center" type="text" class="form-control" id="TeacherUserName" placeholder="Enter TeacherUserName" [required="string" ] data-ng-model="TeacherUserName" />
+    <label align="center" for="TeacherPassword">TeacherPassword</label>
+    <input align="center" type="password" class="form-control" id="TeacherPassword" placeholder="Enter TeacherPassword" [required="string" ] data-ng-model="TeacherPassword" />
+    <label align="center" for="Course">Course</label>
+    <select align="center" ng-model='selectedCourse' ng-options='course.CourseName for course in courses' id="Course" class="form-control"></select>
+</div>
+<div align="center">
+    <button type="button" class="btn btn-default" data-ng-click="saveTeacher();">Submit</button>
+</div>

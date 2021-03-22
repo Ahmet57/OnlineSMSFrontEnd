@@ -1,0 +1,165 @@
+[
+  {
+    "text": "Main Navigation",
+    "heading": "true",
+    "translate": "sidebar.heading.HEADER"
+  },
+  {
+    "text": "Dashboard",
+    "sref": "app.dashboard",
+    "icon": "icon-speedometer",
+    "translate": "sidebar.nav.DASHBOARD"
+  },
+  {
+    "text": "Calender",
+    "sref": "app.calendar",
+    "icon": "icon-speedometer",
+    "translate": "sidebar.nav.CALENDAR"
+  },
+  {
+    "text": "Live",
+    "sref": "app.live",
+    "icon": "icon-speedometer",
+    "translate": "sidebar.nav.LIVE"
+  },
+  {
+    "text": "Library",
+    "sref": "app.library",
+    "icon": "icon-speedometer",
+    "translate": "sidebar.nav.LIBRARY"
+  },
+  {
+    "text": "S_And_C",
+    "sref": "app.S_And_C",
+    "icon": "icon-speedometer",
+    "translate": "sidebar.nav.S_And_C"
+  },
+  {
+    "text": "Widgets",
+    "sref": "app.widgets",
+    "icon": "icon-grid",
+    "alert": "30",
+    "translate": "sidebar.nav.WIDGETS"
+  },
+  {
+    "text": "Kullanici Islemleri",
+    "heading": "true",
+    "translate": "sidebar.heading.USER"
+  },
+  {
+    "text": "Test/Sinav Islemleri",
+    "heading": "true",
+    "translate": "sidebar.heading.COMPONENTS"
+  },
+  {
+    "text": "Question_pool",
+    "sref": "app.widgets",
+    "icon": "icon-speedometer",
+    "translate": "sidebar.nav.QUESTION_POOL"
+  },
+  {
+    "text": "Test_pool",
+    "sref": "app.widgets",
+    "icon": "icon-speedometer",
+    "translate": "sidebar.nav.TEST_POOL"
+  },
+  {
+    "text": "Test_categories",
+    "sref": "app.widgets",
+    "icon": "icon-speedometer",
+    "translate": "sidebar.nav.TEST_CATEGORIES"
+  },
+  {
+    "text": "Survey_questions",
+    "sref": "app.widgets",
+    "icon": "icon-speedometer",
+    "translate": "sidebar.nav.SURVEY_QUESTIONS"
+  },
+  {
+    "text": "More",
+    "heading": "true",
+    "translate": "sidebar.heading.MORE"
+  },
+  {
+    "text": "Pages",
+    "sref": "#",
+    "icon": "icon-doc",
+    "submenu": [
+      {
+        "text": "Login",
+        "sref": "page.login",
+        "translate": "sidebar.nav.pages.LOGIN"
+      },
+      {
+        "text": "Sign up",
+        "sref": "page.register",
+        "translate": "sidebar.nav.pages.REGISTER"
+      },
+      {
+        "text": "Recover Password",
+        "sref": "page.recover",
+        "translate": "sidebar.nav.pages.RECOVER"
+      },
+      {
+        "text": "Lock",
+        "sref": "page.lock",
+        "translate": "sidebar.nav.pages.LOCK"
+      },
+      {
+        "text": "Starter Template",
+        "sref": "app.template",
+        "translate": "sidebar.nav.pages.STARTER"
+      }
+    ],
+    "translate": "sidebar.nav.pages.PAGES"
+  },
+  {
+    "text": "Extras",
+    "sref": "#",
+    "icon": "icon-cup",
+    "submenu": [
+      {
+        "text": "Mailbox",
+        "sref": "app.mailbox.inbox",
+        "translate": "sidebar.nav.extra.MAILBOX"
+      },
+      {
+        "text": "Timeline",
+        "sref": "app.timeline",
+        "translate": "sidebar.nav.extra.TIMELINE"
+      },
+      {
+        "text": "Calendar",
+        "sref": "app.calendar",
+        "translate": "sidebar.nav.extra.CALENDAR"
+      },
+      {
+        "text": "Invoice",
+        "sref": "app.invoice",
+        "translate": "sidebar.nav.extra.INVOICE"
+      },
+      {
+        "text": "Search",
+        "sref": "app.search",
+        "translate": "sidebar.nav.extra.SEARCH"
+      },
+      {
+        "text": "Todo List",
+        "sref": "app.todo",
+        "translate": "sidebar.nav.extra.TODO"
+      },
+      {
+        "text": "Profile",
+        "sref": "app.profile",
+        "translate": "sidebar.nav.extra.PROFILE"
+      }
+    ],
+    "translate": "sidebar.nav.extra.EXTRA"
+  },
+  {
+    "text": "Documentation",
+    "sref": "app.documentation",
+    "icon": "icon-graduation",
+    "translate": "sidebar.nav.DOCUMENTATION"
+  }
+]

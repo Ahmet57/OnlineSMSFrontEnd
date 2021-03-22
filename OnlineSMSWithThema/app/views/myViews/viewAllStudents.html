@@ -1,0 +1,26 @@
+﻿<table class="table table-striped table-bordered table-hover" align="center">
+    <tr>
+        <th>Student ID</th>
+        <th>Student Name</th>
+        <th>Student Surname</th>
+        <th>Student UserName</th>
+        <th>Student Password</th>
+        <th>Student Email</th>
+        <th>Student Address</th>
+        <th>Student ContactNo</th>
+        <th>Enrolled Coarses</th>
+        <th>Delete</th>
+    </tr>
+    <tr ng-repeat="student in students">
+        <td>{{student.ID}}</td>
+        <td>{{student.StudentName}}</td>
+        <td>{{student.StudentSurname}}</td>
+        <td>{{student.UserName}}</td>
+        <td>{{student.Password}}</td>
+        <td>{{student.Email}}</td>
+        <td>{{student.Address}}</td>
+        <td>{{student.ContactNo}}</td>
+        <td>{{student.EnrolledCourses}}</td>
+        <td><button data-ng-click="deleteStudent(student.ID)">Delete</button></td>
+    </tr>
+</table>

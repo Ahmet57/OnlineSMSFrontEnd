@@ -1,0 +1,18 @@
+﻿<table class="table table-striped table-bordered table-hover" align="center">
+    <tr>
+        <th>Teacher ID</th>
+        <th>Teacher Name</th>
+        <th>Teacher UserName</th>
+        <th>Teacher Password</th>
+        <th>Teacher Subject</th>
+        <th>Delete</th>
+    </tr>
+    <tr ng-repeat="teacher in teachers">
+        <td>{{teacher.ID}}</td>
+        <td>{{teacher.TeacherName}}</td>
+        <td>{{teacher.UserName}}</td>
+        <td>{{teacher.Password}}</td>
+        <td>{{teacher.Subject}}</td>
+        <td><button data-ng-click="deleteTeacher(teacher.ID)">Delete</button></td>
+    </tr>
+</table>
