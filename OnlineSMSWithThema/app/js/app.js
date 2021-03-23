@@ -12,18 +12,22 @@ if (typeof $ === 'undefined') { throw new Error('This application\'s JavaScript 
 
 var url = {};
 //var host = "https://localhost:44319/";
-//var host = "https://localhost:44336/";  //local web api with azure database
-var host = "https://testazure20210301214857.azurewebsites.net/"
+var host = "https://localhost:44336/";  //local web api with azure database
+//var host = "https://testazure20210301214857.azurewebsites.net/"
 
-url["GetAdmin"] = host + "api/users/GetAdmin/";
+url["GetAdmin"] = host + "api/admins/GetAdmin/";
 url["GetTeacher"] = host + "api/teachers/GetTeacher/";
 url["GetStudent"] = host + "/api/students/GetStudent/";
+url["RegisterStudent"] = host + "/api/students/RegisterStudent/";
+url["RegisterTeacher"] = host + "/api/teachers/RegisterTeacher/";
 url["TeachersGet"] = host + "api/teachers/get/";
 url["TeachersDelete"] = host + "api/teachers/delete/";
 url["TeachersPost"] = host + "api/teachers/post/";
+url["EditProfileTeacher"] = host + "api/teachers/EditProfileTeacher/";
 url["StudentsGet"] = host + "api/students/get/";
 url["StudentsDelete"] = host + "api/students/delete/";
 url["StudentsPost"] = host + "api/students/post/";
+url["EditProfileStudent"] = host + "api/students/EditProfileStudent/";
 url["CoursesGet"] = host + "api/courses/get/";
 url["CoursesDelete"] = host + "api/courses/delete/";
 url["CoursesPost"] = host + "api/courses/post/";
@@ -110,12 +114,25 @@ var App = angular.module('angle', ['ngRoute', 'ngAnimate', 'ngStorage', 'ngCooki
                   "icon": "icon-speedometer",
                   "translate": "sidebar.nav.LIST_COURSES_STUDENT"
               }
+              $rootScope.editProfileStudent = {
+                  "text": "Profili Düzenle",
+                  "sref": "app.editProfileStudent",
+                  "icon": "icon-speedometer",
+                  "translate": "sidebar.nav.EDIT_PROFILE_STUDENT"
+              }
               $rootScope.listCoursesTeacher = {
                   "text": "Dersleri Listele ve Düzenle",
                   "sref": "app.listCoursesTeacher",
                   "icon": "icon-speedometer",
                   "translate": "sidebar.nav.LIST_COURSES_TEACHER"
               }
+              $rootScope.editProfileTeacher = {
+                  "text": "Profili Düzenle",
+                  "sref": "app.editProfileTeacher",
+                  "icon": "icon-speedometer",
+                  "translate": "sidebar.nav.EDIT_PROFILE_TEACHER"
+              }
+              
             }
       ]);
 
@@ -225,11 +242,25 @@ function ($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvi
           controller: 'ListCoursesTeacherController',
           resolve: resolveFor('jquery-ui', 'moment')
       })
+      .state('app.editProfileTeacher', {
+          url: '/editProfileTeacher',
+          title: 'Edit Profile',
+          templateUrl: basepath('myViews/editProfileTeacher.html'),
+          controller: 'EditProfileTeacherController',
+          resolve: resolveFor('jquery-ui', 'moment')
+      })
       .state('app.listCoursesStudent', {
           url: '/listCoursesStudent',
           title: 'List Courses',
           templateUrl: basepath('myViews/listCoursesStudent.html'),
           controller: 'ListCoursesStudentController',
+          resolve: resolveFor('jquery-ui', 'moment')
+      })
+      .state('app.editProfileStudent', {
+          url: '/editProfileStudent',
+          title: 'Edit Profile',
+          templateUrl: basepath('myViews/editProfileStudent.html'),
+          controller: 'EditProfileStudentController',
           resolve: resolveFor('jquery-ui', 'moment')
       })
       .state("app.editCourseByID", {
@@ -701,9 +732,9 @@ App.controller("AddTeacherController", function ($scope, $http, $window, $state)
     getAllCourses();
     $scope.saveTeacher = function () {
         var teacher = {
-            ID: $scope.TeacherID,
             UserName: $scope.TeacherUserName,
             Password: $scope.TeacherPassword,
+            Email: $scope.TeacherEmail,
             TeacherName: $scope.TeacherName,
             Subject: $scope.selectedCourse.CourseName
         };
@@ -767,7 +798,6 @@ App.controller("ViewAllStudentsController", function ($scope, $http, $state) {
 App.controller("AddStudentController", function ($scope, $http, $window, $state) {
     $scope.saveStudent = function () {
         var student = {
-            ID: $scope.StudentID,
             UserName: $scope.StudentUserName,
             Password: $scope.StudentPassword,
             StudentName: $scope.StudentName,
@@ -814,7 +844,6 @@ App.controller("ViewAllCoursesController", function ($scope, $http, $state) {
 App.controller("AddCourseController", function ($scope, $http, $window, $state) {
     $scope.saveCourse = function () {
         var course = {
-            ID: $scope.CourseID,
             CourseName: $scope.CourseName,
             CourseFee: $scope.CourseFee,
             Duration: $scope.Duration,
@@ -861,7 +890,11 @@ App.controller("ListCoursesStudentController", function ($rootScope, $scope, $ht
         var studentID = $rootScope.user.object.ID;
         var courseID = course.ID;
         if (enrolled == false) {
-            var onSucess = function (response) { getAllCourses(); $state.reload(); }
+            var onSucess = function (response) {
+                getAllCourses();
+                $rootScope.user.object.EnrolledCourses = response.data;
+                $state.reload();
+            }
             var onFailure = function (reason) { this.error = reason }
             $http({
                 method: 'PUT',
@@ -870,7 +903,11 @@ App.controller("ListCoursesStudentController", function ($rootScope, $scope, $ht
             }).then(onSucess, onFailure);
         }
         else {
-            var onSucess = function (response) { getAllCourses(); $state.reload(); }
+            var onSucess = function (response) {
+                getAllCourses();
+                $rootScope.user.object.EnrolledCourses = response.data;
+                $state.reload();
+            }
             var onFailure = function (reason) { this.error = reason }
             $http({
                 method: 'PUT',
@@ -879,6 +916,49 @@ App.controller("ListCoursesStudentController", function ($rootScope, $scope, $ht
             }).then(onSucess, onFailure);
         }
     }
+})
+App.controller("EditProfileStudentController", function ($rootScope, $scope, $http, $state) {
+    $scope.StudentName = $rootScope.user.object.StudentName;
+    $scope.StudentSurname = $rootScope.user.object.StudentSurname;
+    $scope.UserName = $rootScope.user.object.UserName;
+    $scope.Password = $rootScope.user.object.Password;
+    $scope.Email = $rootScope.user.object.Email;
+    $scope.Address = $rootScope.user.object.Address;
+    $scope.ContactNo = $rootScope.user.object.ContactNo;
+    $scope.EnrolledCourses = $rootScope.user.object.EnrolledCourses;
+    $scope.saveProfile = function () {
+        var student = {
+            ID: $rootScope.user.object.ID,
+            StudentName: document.getElementById('StudentName').value,
+            StudentSurname: document.getElementById('StudentSurname').value,
+            UserName: document.getElementById('StudentUsername').value,
+            Password: document.getElementById('StudentPassword').value,
+            Email: document.getElementById('StudentEmail').value,
+            Address: document.getElementById('StudentAddress').value,
+            ContactNo: document.getElementById('StudentContactNo').value,
+            EnrolledCourses: document.getElementById('EnrolledCourses').value
+        };
+        var onSucess = function (response) {
+            $rootScope.user.object.StudentName= document.getElementById('StudentName').value;
+            $rootScope.user.object.StudentSurname = document.getElementById('StudentSurname').value;
+            $rootScope.user.object.UserName = document.getElementById('StudentUsername').value;
+            $rootScope.user.object.Password = document.getElementById('StudentPassword').value;
+            $rootScope.user.object.Email = document.getElementById('StudentEmail').value;
+            $rootScope.user.object.Address = document.getElementById('StudentAddress').value;
+            $rootScope.user.object.ContactNo = document.getElementById('StudentContactNo').value;
+            $rootScope.user.object.EnrolledCourses = document.getElementById('EnrolledCourses').value;
+            $state.reload();
+        }
+        var onFailure = function (reason) { this.error = reason }
+        $http({
+            method: 'PUT',
+            url: url["EditProfileStudent"],
+            data: student,
+        }).then(onSucess, onFailure);
+       // $state.reload();
+
+    }
+
 })
 
 App.controller("ListCoursesTeacherController", function ($scope, $http) {
@@ -906,6 +986,49 @@ App.controller("EditCourseByIDController", function ($scope, $http, $stateParams
             params: { courseID: courseID, startTime: startTime, endTime: endTime, context: context },
         }).then(onSucess, onFailure);
     }
+})
+
+App.controller("EditProfileTeacherController", function ($rootScope, $scope, $http, $state) {
+    var onSucess = function (response) { $scope.courses = response.data }
+    var onFailure = function (reason) { $scope.error = reason }
+    var getAllCourses = function () {
+        $http({
+            method: 'GET',
+            url: url["CoursesGet"],
+        }).then(onSucess, onFailure)
+    }
+    getAllCourses();
+    $scope.TeacherName = $rootScope.user.object.TeacherName;
+    $scope.UserName = $rootScope.user.object.UserName;
+    $scope.Password = $rootScope.user.object.Password;
+    $scope.Email = $rootScope.user.object.Email;
+    $scope.Subject = $rootScope.user.object.Subject;
+    $scope.saveProfile = function () {
+        var teacher = {
+            ID: $rootScope.user.object.ID,
+            TeacherName: document.getElementById('TeacherName').value,
+            UserName: document.getElementById('TeacherUsername').value,
+            Password: document.getElementById('TeacherPassword').value,
+            Email: document.getElementById('TeacherEmail').value,
+            Subject: $scope.selectedCourse.CourseName
+        };
+        var onSucess = function (response) {
+            $rootScope.user.object.TeacherName = document.getElementById('TeacherName').value;
+            $rootScope.user.object.UserName = document.getElementById('TeacherUsername').value;
+            $rootScope.user.object.Password = document.getElementById('TeacherPassword').value;
+            $rootScope.user.object.Email = document.getElementById('TeacherEmail').value;
+            $rootScope.user.object.Subject = $scope.selectedCourse.CourseName
+            $state.reload();
+        }
+        var onFailure = function (reason) { this.error = reason }
+        $http({
+            method: 'PUT',
+            url: url["EditProfileTeacher"],
+            data: teacher,
+        }).then(onSucess, onFailure);
+
+    }
+
 })
 
 App.controller("LiveController", function ($scope, $http) {
@@ -950,7 +1073,7 @@ App.controller("S_And_CController", function ($scope, $http) {
 App.controller('LoginFormController', function ($rootScope, $scope, $state, $http, $window) {
     $scope.Login = async function ()
     {
-        //get admin type
+        //get login user type
         var e = document.getElementById("login");
         var strUser = e.value;
 
@@ -958,7 +1081,7 @@ App.controller('LoginFormController', function ($rootScope, $scope, $state, $htt
             var admin = await $http({
                 method: 'GET',
                 url: url["GetAdmin"],
-                params: { UserName: $scope.Username, Password: $scope.Password }
+                params: { Email: $scope.Email, Password: $scope.Password }
             }).then(onSucess, onFailure);
             var onSucess = function (response) { return response.data; }
             var onFailure = function (reason) { this.error = reason }
@@ -981,7 +1104,7 @@ App.controller('LoginFormController', function ($rootScope, $scope, $state, $htt
             var teacher = await $http({
                 method: 'GET',
                 url: url["GetTeacher"],
-                params: { UserName: $scope.Username, Password: $scope.Password }
+                params: { Email: $scope.Email, Password: $scope.Password }
             }).then(onSucess, onFailure);
             var onSucess = function (response) { return response.data; }
             var onFailure = function (reason) { this.error = reason }
@@ -1005,7 +1128,7 @@ App.controller('LoginFormController', function ($rootScope, $scope, $state, $htt
             var student = await $http({
                 method: 'GET',
                 url: url["GetStudent"],
-                params: { UserName: $scope.Username, Password: $scope.Password }
+                params: { Email: $scope.Email, Password: $scope.Password }
             }).then(onSucess, onFailure);
             var onSucess = function (response) { return response.data; }
             var onFailure = function (reason) { this.error = reason }
@@ -1032,32 +1155,50 @@ App.controller('LoginFormController', function ($rootScope, $scope, $state, $htt
  * Demo for register account api
  =========================================================*/
 
-App.controller('RegisterFormController', ['$scope', '$http', '$state', function($scope, $http, $state) {
+App.controller('RegisterFormController', function ($rootScope, $scope, $state, $http, $window) {
 
   // bind here all data from the form
   $scope.account = {};
   // place the message if something goes wrong
-  $scope.authMsg = '';
-    
-  $scope.register = function() {
     $scope.authMsg = '';
-
-    $http
-      .post('api/account/register', {email: $scope.account.email, password: $scope.account.password})
-      .then(function(response) {
-        // assumes if ok, response is an object with some data, if not, a string with error
-        // customize according to your api
-        if ( !response.account ) {
-          $scope.authMsg = response;
-        }else{
-          $state.go('app.dashboard');
+    
+    $scope.register = function () {
+        //get register user type
+        var e = document.getElementById("register");
+        var strUser = e.value;
+        if (strUser == "ogretmen")
+        {
+            var onSuccess = function (response) {
+                $window.alert("Teacher registered successfully");
+                $state.reload();
+            }
+            var onFailure = function (reason) { $window.alert("Oops! Something went wrong while saving the data."); }
+            $http({
+                method: 'POST',
+                params: { email: $scope.account.email, password: $scope.account.password },
+                url: url["RegisterTeacher"],
+            }).then(onSuccess, onFailure);
+            $state.reload();
         }
-      }, function(x) {
-        $scope.authMsg = 'Server Request Error';
-      });
+        else if (strUser == "ogrenci")
+        {
+            var onSuccess = function (response) {
+                $window.alert("Student registered successfully");
+                $state.reload();
+            }
+            var onFailure = function (reason) { $window.alert("Oops! Something went wrong while saving the data."); }
+            $http({
+                method: 'POST',
+                params: { email: $scope.account.email, password: $scope.account.password },
+                url: url["RegisterStudent"],
+            }).then(onSuccess, onFailure);
+            $state.reload();
+        }
+      
+
   };
 
-}]);
+})
 
 /**=========================================================
  * Module: calendar-ui.js
@@ -2774,10 +2915,12 @@ App.controller('SidebarController', ['$rootScope', '$scope', '$state', '$locatio
               $rootScope.menuItems.splice(13, 0, $rootScope.addCourse);
           }
           else if ($rootScope.user.job == "Student") {
-              $rootScope.menuItems.splice(8, 0, $rootScope.listCoursesStudent);
+              $rootScope.menuItems.splice(8, 0, $rootScope.editProfileStudent);
+              $rootScope.menuItems.splice(9, 0, $rootScope.listCoursesStudent);
           }
           else if ($rootScope.user.job == "Teacher") {
-              $rootScope.menuItems.splice(8, 0, $rootScope.listCoursesTeacher);
+              $rootScope.menuItems.splice(8, 0, $rootScope.editProfileTeacher);
+              $rootScope.menuItems.splice(9, 0, $rootScope.listCoursesTeacher);
           }
    /*
       var menuJson = 'server/sidebar-menu.json',

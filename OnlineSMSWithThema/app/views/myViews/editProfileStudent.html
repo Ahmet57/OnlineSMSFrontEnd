@@ -1,0 +1,84 @@
+﻿<!-- START panel-->
+<div class="panel panel-default">
+    <div class="panel-heading">Form elements</div>
+    <div class="panel-body">
+        <form method="get" action="/" class="form-horizontal">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="StudentName" value={{StudentName}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Student Surname</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="StudentSurname" value={{StudentSurname}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Username</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="StudentUsername" value={{UserName}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="StudentPassword" value={{Password}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="StudentEmail" value={{Email}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Enrolled Courses</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="EnrolledCourses" disabled="" value={{EnrolledCourses}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Address</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="StudentAddress" value={{Address}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Contact No</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="StudentContactNo" value={{ContactNo}} />
+                    </div>
+                </div>
+            </fieldset>
+
+        </form>
+    </div>
+    <div align="center">
+        <button type="button" class="btn btn-default" data-ng-click="saveProfile()">Save</button>
+    </div>
+</div>
+<!-- END panel-->

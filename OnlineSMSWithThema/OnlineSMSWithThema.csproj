@@ -145,6 +145,8 @@
     <Content Include="app\views\myViews\addStudent.html" />
     <Content Include="app\views\myViews\addTeacher.html" />
     <Content Include="app\views\myViews\editCourseByID.html" />
+    <Content Include="app\views\myViews\editProfileStudent.html" />
+    <Content Include="app\views\myViews\editProfileTeacher.html" />
     <Content Include="app\views\myViews\listCoursesStudent.html" />
     <Content Include="app\views\myViews\S_And_C.html" />
     <Content Include="app\views\myViews\live.html" />

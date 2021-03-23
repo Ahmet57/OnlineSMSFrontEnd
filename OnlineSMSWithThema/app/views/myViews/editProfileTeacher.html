@@ -1,0 +1,57 @@
+﻿<!-- START panel-->
+<div class="panel panel-default">
+    <div class="panel-heading">Form elements</div>
+    <div class="panel-body">
+        <form method="get" action="/" class="form-horizontal">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Teacher Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="TeacherName" value={{TeacherName}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Username</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="TeacherUsername" value={{UserName}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="TeacherPassword" value={{Password}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="TeacherEmail" value={{Email}} />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Subject</label>
+                    <div class="col-sm-10">
+                        <select align="center" ng-model='selectedCourse' ng-options='course.CourseName for course in courses' id="TeacherSubject" class ="form-control"></select>
+                    </div>
+                </div>
+            </fieldset>
+
+        </form>
+    </div>
+    <div align="center">
+        <button type="button" class="btn btn-default" data-ng-click="saveProfile()">Save</button>
+    </div>
+</div>
+<!-- END panel-->
